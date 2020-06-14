@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ShadiMatcherCard</string>
+    <string name="person_name">Surjit S</string>
+    <string name="description_dummy_text">"27, 5'6, Punjabi, Jat "\n" Ludhiyana, India, MBA-Finance"</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+</resources>
