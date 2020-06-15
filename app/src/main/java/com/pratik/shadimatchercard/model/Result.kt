@@ -1,6 +1,6 @@
 package com.pratik.shadimatchercard.model
 
-data class PersonModel(
+data class Result(
     val cell: String,
     val dob: Dob,
     val email: String,

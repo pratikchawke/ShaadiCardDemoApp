@@ -1,18 +1,14 @@
-package com.pratik.weatherdemoapp.retrofit
-import com.pratik.weatherdemoapp.model.WeatherReport
-import dagger.Module
-import dagger.Provides
+package com.pratik.shadimatchercard.retrofit
+import com.pratik.shadimatchercard.model.PersonsList
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface  ApiRequest {
 
-    @GET("/data/2.5/weather?")
-    fun getWeatherReport(
-        @Query("appid") apiKey: String?,
-        @Query("lat") lat: Double,
-        @Query("lon") lon: Double,
-        @Query("units") units: String?
-    ): Call<WeatherReport>
+interface ApiRequest {
+
+    @GET("/api/?")
+    fun getPersonsList(
+        @Query("results") results: Int
+    ): Call<PersonsList>
 }

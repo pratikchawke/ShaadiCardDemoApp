@@ -76,6 +76,15 @@
                     android:text="@string/decline"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
+            <TextView
+                android:padding="8dp"
+                android:visibility="gone"
+                android:id="@+id/statusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accepted/Declined"
+                android:textColor="@color/colorPrimary"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

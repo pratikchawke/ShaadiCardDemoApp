@@ -1,4 +1,4 @@
-package com.pratik.weatherdemoapp.listener
+package com.pratik.shadimatchercard.listener
 
 interface LoadingListener {
     fun showLoading()

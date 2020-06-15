@@ -1,19 +1,11 @@
-package com.pratik.weatherdemoapp.retrofit
-
-import androidx.annotation.NonNull
-import com.pratik.weatherdemoapp.AppConstants
-import dagger.Module
-import dagger.Provides
+package com.pratik.shadimatchercard.retrofit
+import com.pratik.shadimatchercard.AppConstants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
-@Module
-class RetrofitModule {
 
-    @NonNull
-    @Provides
-    @Singleton
+object RetrofitModule {
+
     fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(AppConstants.BASE_URL)
@@ -21,9 +13,6 @@ class RetrofitModule {
             .build()
     }
 
-    @NonNull
-    @Provides
-    @Singleton
     fun createApiRequest(retrofit: Retrofit): ApiRequest {
         return retrofit.create(ApiRequest::class.java)
     }
