@@ -8,6 +8,7 @@ import com.pratik.shadimatchercard.MainActivity.Companion.loader
 import com.pratik.shadimatchercard.model.PersonsList
 import com.pratik.shadimatchercard.retrofit.ApiRequest
 import com.pratik.shadimatchercard.retrofit.RetrofitModule
+import com.pratik.shadimatchercard.model.Result
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,8 +16,8 @@ import retrofit2.Response
 class PersonViewModel : ViewModel() {
 
     val TAG = PersonViewModel::class.java.simpleName
-    var personsMutableLiveData: MutableLiveData<PersonsList> = MutableLiveData()
-    val personLiveDataList: LiveData<PersonsList> = personsMutableLiveData
+    var personsMutableLiveData: MutableLiveData<List<Result>> = MutableLiveData()
+    val personLiveDataList: LiveData<List<Result>> = personsMutableLiveData
     var apiRequest: ApiRequest
 
     init {
@@ -35,7 +36,7 @@ class PersonViewModel : ViewModel() {
                 ) {
                     Log.d(TAG, "Response : " + response.body())
                     if (response.body() != null) {
-                        personsMutableLiveData!!.value = response.body()
+                        personsMutableLiveData!!.value = response.body()!!.results
                         loader.dismissLoading()
                     }
                 }

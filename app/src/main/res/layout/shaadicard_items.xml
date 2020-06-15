@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="result"
+            type="com.pratik.shadimatchercard.model.Result" />
+    </data>
+<androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     app:cardCornerRadius="8dp"
+    android:layout_margin="8dp"
     app:cardElevation="@dimen/cardview_compat_inset_shadow"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +32,7 @@
             android:layout_gravity="center"
             android:src="@drawable/profile"
             app:civ_border_color="#FF000000"
+            app:imageUrl="@{result.picture.thumbnail}"
             app:civ_border_width="2dp" />
 
 
@@ -36,6 +43,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
             android:text="@string/person_name"
+            app:description="@{result.name.first}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorName" />
 
@@ -49,7 +57,18 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorDescription" />
 
+        <TextView
+            android:padding="8dp"
+            android:visibility="gone"
+            android:id="@+id/statusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accepted/Declined"
+            android:textColor="@color/colorPrimary"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
         <LinearLayout
+            android:id="@+id/acceptanceView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
@@ -68,6 +87,7 @@
                     android:id="@+id/declineImageView"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:background="?android:attr/selectableItemBackground"
                     android:src="@drawable/decline" />
 
                 <TextView
@@ -76,15 +96,6 @@
                     android:text="@string/decline"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>
-            <TextView
-                android:padding="8dp"
-                android:visibility="gone"
-                android:id="@+id/statusTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Accepted/Declined"
-                android:textColor="@color/colorPrimary"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -97,6 +108,7 @@
                     android:id="@+id/acceptImageView"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:background="?android:attr/selectableItemBackground"
                     android:src="@drawable/accept" />
 
                 <TextView
@@ -109,3 +121,4 @@
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
+</layout>

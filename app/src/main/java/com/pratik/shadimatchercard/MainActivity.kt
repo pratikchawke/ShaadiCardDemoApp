@@ -1,5 +1,6 @@
 package com.pratik.shadimatchercard
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -10,15 +11,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.pratik.shadimatchercard.adapter.PersonsListAdapter
+import com.pratik.shadimatchercard.databinding.ShaadicardItemsBinding
 import com.pratik.shadimatchercard.listener.LoadingListener
 import com.pratik.shadimatchercard.viewmodel.PersonViewModel
+import com.pratik.shadimatchercard.model.Result
 
 class MainActivity : AppCompatActivity(), LoadingListener {
 
-    val TAG = MainActivity::class.java.simpleName
+    private val TAG = MainActivity::class.java.simpleName
     private var dialog: Dialog? = null
-    lateinit var personViewModel: PersonViewModel
+    private lateinit var personViewModel: PersonViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +38,20 @@ class MainActivity : AppCompatActivity(), LoadingListener {
             Observer { dataList ->
                 if (dataList != null) {
                     Log.d(TAG, "List : " + dataList.toString())
+                    setData(dataList)
                 }
             })
+
+    }
+
+
+    private fun setData(dataList: List<Result>) {
+        val recyclerView = findViewById(R.id.recyclerView) as RecyclerView
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.addItemDecoration(DividerItemDecoration(this, layoutManager.orientation))
+        val adapter = PersonsListAdapter(dataList)
+        recyclerView.adapter = adapter
 
     }
 

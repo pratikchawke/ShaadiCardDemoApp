@@ -1,5 +1,11 @@
 package com.pratik.shadimatchercard.model
 
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import de.hdodenhof.circleimageview.CircleImageView
+
 data class Result(
     val cell: String,
     val dob: Dob,
@@ -12,5 +18,24 @@ data class Result(
     val nat: String,
     val phone: String,
     val picture: Picture,
-    val registered: Registered
-)
+    val registered: Registered,
+    val isSelected: Boolean,
+    val status: String
+){
+
+    companion object {
+        @JvmStatic
+        @BindingAdapter("imageUrl")
+        fun loadImage(view: CircleImageView, image_path: String?) {
+            Glide.with(view.context)
+                .load(image_path)
+                .into(view)
+        }
+
+        @JvmStatic
+        @BindingAdapter("description")
+        fun setDescription(view: TextView, description: String?) {
+            view.text = description
+        }
+    }
+}
