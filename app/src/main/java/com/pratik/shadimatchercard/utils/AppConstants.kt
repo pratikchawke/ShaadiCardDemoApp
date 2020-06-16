@@ -1,4 +1,4 @@
-package com.pratik.shadimatchercard
+package com.pratik.shadimatchercard.utils
 
 class AppConstants {
 

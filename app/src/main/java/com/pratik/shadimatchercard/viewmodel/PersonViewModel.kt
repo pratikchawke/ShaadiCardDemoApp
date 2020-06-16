@@ -1,10 +1,13 @@
 package com.pratik.shadimatchercard.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.airbnb.lottie.utils.Utils
 import com.google.gson.Gson
+import com.pratik.shadimatchercard.MainActivity
 import com.pratik.shadimatchercard.MainActivity.Companion.db
 import com.pratik.shadimatchercard.MainActivity.Companion.loader
 import com.pratik.shadimatchercard.db.Entity
@@ -12,13 +15,14 @@ import com.pratik.shadimatchercard.model.PersonsList
 import com.pratik.shadimatchercard.retrofit.ApiRequest
 import com.pratik.shadimatchercard.retrofit.RetrofitModule
 import com.pratik.shadimatchercard.model.Result
+import com.pratik.shadimatchercard.utils.Util
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PersonViewModel : ViewModel() {
+class PersonViewModel(private val context: Context) : ViewModel() {
 
     val TAG = PersonViewModel::class.java.simpleName
     var personsMutableLiveData: MutableLiveData<ArrayList<Result>> = MutableLiveData()
@@ -33,10 +37,21 @@ class PersonViewModel : ViewModel() {
 
     fun getPersonsList() {
         val listOfData = db.dao().entityList
+
         if (listOfData.size > 1) {
             getDataForDB(listOfData)
             return
         }
+        if(Util.isInternetConnected(context)){
+            getDataFromWebServices()
+        }else{
+            val activity: MainActivity = context as MainActivity
+            Util.showNoNetworkDialog(activity)
+        }
+
+    }
+
+    private fun getDataFromWebServices(){
         loader.showLoading()
         apiRequest.getPersonsList(10)
             .enqueue(object : Callback<PersonsList> {
@@ -58,7 +73,6 @@ class PersonViewModel : ViewModel() {
                 }
             })
     }
-
 
     fun inserDataIntoDB(resultList: ArrayList<Result>) {
         for (result in resultList) {

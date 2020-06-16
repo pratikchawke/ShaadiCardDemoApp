@@ -1,5 +1,5 @@
 package com.pratik.shadimatchercard.retrofit
-import com.pratik.shadimatchercard.AppConstants
+import com.pratik.shadimatchercard.utils.AppConstants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), LoadingListener {
         super.onCreate(savedInstanceState)
         loader = this;
         initDB()
-        personViewModel = PersonViewModel()
+        personViewModel = PersonViewModel(this)
         setContentView(R.layout.activity_main)
         personViewModel.personLiveDataList.observe(this,
             Observer { dataList ->

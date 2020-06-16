@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="com.pratik.shadimatchercard.utils.Util"/>
         <variable
             name="result"
             type="com.pratik.shadimatchercard.model.Result" />
@@ -43,7 +44,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
             android:text="@string/person_name"
-            app:description="@{result.name.first}"
+            app:description="@{Util.INSTANCE.getName(result)}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorName" />
 
@@ -53,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
-            android:text="@string/description_dummy_text"
+            android:text="@{Util.INSTANCE.getDescription(result)}"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorDescription" />
 
