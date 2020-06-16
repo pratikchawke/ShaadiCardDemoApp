@@ -19,8 +19,8 @@ data class Result(
     val phone: String,
     val picture: Picture,
     val registered: Registered,
-    val isSelected: Boolean,
-    val status: String
+    var status : String,
+    var isSelected : Boolean
 ){
 
     companion object {

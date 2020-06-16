@@ -8,13 +8,16 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.pratik.shadimatchercard.MainActivity.Companion.db
 import com.pratik.shadimatchercard.R
 import com.pratik.shadimatchercard.databinding.ShaadicardItemsBinding
-import com.pratik.shadimatchercard.listener.ClickListener
 import com.pratik.shadimatchercard.model.Result
+import java.util.*
 
-class PersonsListAdapter(private val listOfPersonsList: List<Result>) :
-    RecyclerView.Adapter<PersonsListAdapter.ViewHolder>() {
+class PersonsListAdapter(
+    private val listOfPersonsList: ArrayList<Result>
+) : RecyclerView.Adapter<PersonsListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemsBinding: ShaadicardItemsBinding = DataBindingUtil.inflate(
@@ -33,16 +36,36 @@ class PersonsListAdapter(private val listOfPersonsList: List<Result>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val personData = listOfPersonsList.get(position)
         holder.onBind(personData)
-        holder.acceptView.setOnClickListener {click ->
+        holder.setIsRecyclable(false)
+
+        if (personData.isSelected){
+            holder.acceptanceView.visibility = View.GONE
+            holder.status.visibility = View.VISIBLE
+            holder.status.text = personData.status
+        }
+
+        holder.acceptView.setOnClickListener { click ->
             holder.acceptanceView.visibility = View.GONE
             holder.status.visibility = View.VISIBLE
             holder.status.text = "Accepted"
+            updateDB(true, personData)
         }
-        holder.declineView.setOnClickListener {click ->
+
+        holder.declineView.setOnClickListener { click ->
             holder.acceptanceView.visibility = View.GONE
             holder.status.visibility = View.VISIBLE
             holder.status.text = "Declined"
+            updateDB(false, personData)
         }
+    }
+
+    private fun updateDB(flag: Boolean, result: Result) {
+        result.isSelected = true
+        if (flag) result.status = "Accepted" else result.status = "Declined"
+        val gson = Gson()
+        val jsonObject = gson.toJson(result)
+        val entity = com.pratik.shadimatchercard.db.Entity(result.email, jsonObject)
+        db.dao().update(entity)
     }
 
 
@@ -57,5 +80,4 @@ class PersonsListAdapter(private val listOfPersonsList: List<Result>) :
             itemBinding.result = result
         }
     }
-
 }

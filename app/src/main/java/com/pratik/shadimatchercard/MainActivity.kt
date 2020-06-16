@@ -17,11 +17,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.pratik.shadimatchercard.adapter.PersonsListAdapter
 import com.pratik.shadimatchercard.databinding.ShaadicardItemsBinding
+import com.pratik.shadimatchercard.db.AppDatabase
 import com.pratik.shadimatchercard.listener.LoadingListener
 import com.pratik.shadimatchercard.viewmodel.PersonViewModel
 import com.pratik.shadimatchercard.model.Result
+import java.util.*
 
 class MainActivity : AppCompatActivity(), LoadingListener {
 
@@ -32,6 +35,7 @@ class MainActivity : AppCompatActivity(), LoadingListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loader = this;
+        initDB()
         personViewModel = PersonViewModel()
         setContentView(R.layout.activity_main)
         personViewModel.personLiveDataList.observe(this,
@@ -41,11 +45,18 @@ class MainActivity : AppCompatActivity(), LoadingListener {
                     setData(dataList)
                 }
             })
+    }
 
+    private fun initDB() {
+        db = Room
+            .databaseBuilder(this, AppDatabase::class.java, "Result")
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
 
-    private fun setData(dataList: List<Result>) {
+    private fun setData(dataList: ArrayList<Result>) {
         val recyclerView = findViewById(R.id.recyclerView) as RecyclerView
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
@@ -57,6 +68,7 @@ class MainActivity : AppCompatActivity(), LoadingListener {
 
     companion object {
         lateinit var loader: LoadingListener
+        lateinit var db: AppDatabase
     }
 
     override fun showLoading() {
